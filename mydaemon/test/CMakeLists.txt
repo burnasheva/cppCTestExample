@@ -1,9 +1,13 @@
 project(MyTests)
 
-set(tests_bin utest)
+include(${CMAKE_SOURCE_DIR}/3rdparty/gmock/CMakeLibs.txt)
 
-add_executable(${tests_bin} boostTest01.cpp)
-target_link_libraries(${tests_bin} boost_unit_test_framework pthread MyMath)
+set(BOOSTTEST_BIN_NAME utest01)
+add_executable(${BOOSTTEST_BIN_NAME} boostTest01.cpp)
+target_link_libraries(${BOOSTTEST_BIN_NAME} boost_unit_test_framework pthread MyMath)
+add_test(boost_unit_test ${CMAKE_CURRENT_BINARY_DIR}/${BOOSTTEST_BIN_NAME})
 
-# add_test(boost_unit_test ${CMAKE_BINARY_DIR}/test/${tests_bin})
-add_test(boost_unit_test ${CMAKE_CURRENT_BINARY_DIR}/${tests_bin})
+set(GTEST_BIN_NAME utest02)
+add_executable(${GTEST_BIN_NAME} gtest01.cpp)
+target_link_libraries(${GTEST_BIN_NAME} gtest gtest_main pthread MyMath)
+add_test(google_unit_test ${CMAKE_CURRENT_BINARY_DIR}/${GTEST_BIN_NAME})
