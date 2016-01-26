@@ -5,5 +5,5 @@ include_directories(include)
 
 add_executable(${PROJECT_NAME}
   src/main.cpp
-  ../mylib/mymath.cpp
 )
+target_link_libraries(${PROJECT_NAME} MyMathLib)
