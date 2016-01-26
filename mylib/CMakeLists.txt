@@ -1,5 +1,5 @@
 project(MyMath)
 
-add_library(MyMathLib STATIC
+add_library(MyMath STATIC
   mymath.cpp
 )
