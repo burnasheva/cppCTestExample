@@ -1,17 +1,14 @@
 project(MyTests)
 
-include(${CMAKE_SOURCE_DIR}/3rdparty/gmock/CMakeLibs.txt)
+include(${CMAKE_SOURCE_DIR}/cmake/utest.txt)
 
-set(BOOSTTEST_BIN_NAME utest01)
-add_executable(${BOOSTTEST_BIN_NAME}
+add_executable(utest01
   boostTest01.cpp
   ${CMAKE_SOURCE_DIR}/3rdparty/teamcity-cpp/teamcity_messages
   ${CMAKE_SOURCE_DIR}/3rdparty/teamcity-cpp/teamcity_boost
 )
-target_link_libraries(${BOOSTTEST_BIN_NAME} boost_unit_test_framework pthread MyMath)
-add_test(boost_unit_test ${CMAKE_CURRENT_BINARY_DIR}/${BOOSTTEST_BIN_NAME})
+target_link_libraries(utest01 boost_unit_test_framework pthread MyMath)
+add_test(boost_unit_test ${CMAKE_CURRENT_BINARY_DIR}/utest01)
 
-set(GTEST_BIN_NAME utest02)
-add_executable(${GTEST_BIN_NAME} gtest01.cpp)
-target_link_libraries(${GTEST_BIN_NAME} gtest gtest_main pthread MyMath)
-add_test(google_unit_test ${CMAKE_CURRENT_BINARY_DIR}/${GTEST_BIN_NAME} --gtest_output=xml:gtestReport.xml)
+add_gmock_test(utest02 gtest01.cpp)
+target_link_libraries(utest02 MyMath)
