@@ -1,6 +1,6 @@
 project(MyTests)
 
-include(${CMAKE_SOURCE_DIR}/cmake/utest.txt)
+include(${CMAKE_SOURCE_DIR}/cmake/UnitTests.cmake)
 
 add_boost_test(btest01 boostTest01.cpp)
 target_link_libraries(btest01 MyMath)
