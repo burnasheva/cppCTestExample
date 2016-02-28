@@ -14,7 +14,7 @@ script:
  - ls -alF .
  - ls -alF ./mydaemon
  - ls -alF ./mydaemon/test
- - gcov tmp.c
+ - gcov ./mydaemon/test/gtest01.cpp
 
 notifications:
   slack: j0ny:tlJolYCjWs5eI2DmeZFry8sa
