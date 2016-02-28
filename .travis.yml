@@ -24,6 +24,8 @@ after_script:
  - ls -alF ./mydaemon
  - ls -alF ./mydaemon/test
  - find . -name "*.gcno*"
+ - whereis gocv
+ - whereis gocv-4.8
 
 notifications:
   slack: j0ny:tlJolYCjWs5eI2DmeZFry8sa
