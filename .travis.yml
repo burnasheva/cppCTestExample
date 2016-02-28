@@ -16,8 +16,7 @@ script:
  - ls -alF ./mydaemon
  - ls -alF ./mydaemon/test
  - find . -name "*.gcno*"
- - cat ./mydaemon/test/CMakeFiles/gtest01.dir/gtest01.cpp.gcno
- - gcov ./mydaemon/test/gtest01.cpp --object-directory ./mydaemon/test/CMakeFiles/gtest01.dir/
+ - gcov ./mydaemon/test/gtest01.cpp --object-file ./mydaemon/test/CMakeFiles/gtest01.dir/gtest01.cpp.gcno
 
 notifications:
   slack: j0ny:tlJolYCjWs5eI2DmeZFry8sa
