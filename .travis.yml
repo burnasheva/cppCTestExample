@@ -6,6 +6,7 @@ before_install:
   - sudo apt-get install libboost-test-dev
   - if [ "$CXX" = "g++" ]; then sudo apt-get install -qq g++-4.8; fi
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
+  - pip install --user cpp-coveralls
 
 script:
  - mkdir build && cd build && cmake .. && make VERBOSE=1
@@ -16,7 +17,11 @@ script:
  - ls -alF ./mydaemon
  - ls -alF ./mydaemon/test
  - find . -name "*.gcno*"
- - gcov ./mydaemon/test/gtest01.cpp --object-file ./mydaemon/test/CMakeFiles/gtest01.dir/gtest01.cpp.gcno
+ # - gcov ./mydaemon/test/gtest01.cpp --object-file ./mydaemon/test/CMakeFiles/gtest01.dir/gtest01.cpp.gcno
+ - ./configure --enable-gcov && make && make check
+
+after_success:
+  - coveralls --exclude lib --exclude tests --gcov-options '\-lp'
 
 notifications:
   slack: j0ny:tlJolYCjWs5eI2DmeZFry8sa
