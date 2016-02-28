@@ -1,0 +1,14 @@
+language: cpp
+
+before_install:
+  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+  - sudo apt-get update -qq
+  - sudo apt-get install libboost-test-dev
+  - if [ "$CXX" = "g++" ]; then sudo apt-get install -qq g++-4.8; fi
+  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
+
+script:
+ - mkdir build && cd build && cmake .. && make && ./mydaemon/test/btest01 --log_level=all
+
+notifications:
+  slack: j0ny:tlJolYCjWs5eI2DmeZFry8sa
