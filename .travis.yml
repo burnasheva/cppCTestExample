@@ -8,7 +8,7 @@ before_install:
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
 
 script:
- - mkdir build && cd build && cmake .. && make
+ - mkdir build && cd build && cmake .. && make VERBOSE=1
  - ./mydaemon/test/btest01 --log_level=all
  - ./mydaemon/test/gtest01
  - ls -alF .
