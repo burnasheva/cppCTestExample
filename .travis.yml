@@ -17,7 +17,7 @@ after_success:
  - sudo rm /usr/bin/gcov && sudo cp /usr/bin/gcov-4.8 /usr/bin/gcov
  - gcov -v
  - gcov ./mydaemon/test/gtest01.cpp --object-file ./mydaemon/test/CMakeFiles/gtest01.dir/gtest01.cpp.gcno
- - coveralls --exclude lib --exclude tests --gcov-options '\-lp'
+ #- coveralls --exclude lib --exclude tests --gcov-options '\-lp'
 
 after_script:
  - pwd
@@ -25,8 +25,6 @@ after_script:
  - ls -alF ./mydaemon
  - ls -alF ./mydaemon/test
  - find . -name "*.gcno*"
- - whereis gcov
- - whereis gcov-4.8
 
 notifications:
   slack: j0ny:tlJolYCjWs5eI2DmeZFry8sa
