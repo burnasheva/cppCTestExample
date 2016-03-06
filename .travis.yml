@@ -23,22 +23,19 @@ script:
   - ./mylib/test/gtest01
 
 after_success:
-  # Copying Coveralls data to a separate folder
-  - mkdir -p $TRAVIS_BUILD_DIR/coverals
-  - find ./ -name "*.gcda" -exec cp "{}" $TRAVIS_BUILD_DIR/coverals/ \;
-  - find ./ -name "*.gcno" -exec cp "{}" $TRAVIS_BUILD_DIR/coverals/ \;
-  - ls -alF $TRAVIS_BUILD_DIR/coverals
-
   # use gcov-4.8
-  - sudo update-alternatives --install /usr/bin//gcov /gcov /usr/bin//gcov-4.8 90
+  - sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-4.8 90
 #  - sudo rm /usr/bin/gcov && sudo cp /usr/bin/gcov-4.8 /usr/bin/gcov
   - gcov -v
+  - pwd
 
   # Preparing Coveralls data by changind data format to a readable one
-  - lcov --capture --directory $TRAVIS_BUILD_DIR/coverals --base-directory ./ --output-file $TRAVIS_BUILD_DIR/coverals/coverage.info
+  - lcov --capture --directory ./ --base-directory ./ --output-file coverage.info
+  - ls -alF .
 
   # ... erasing /usr* and 3rdparty folder data
-  - lcov --remove $TRAVIS_BUILD_DIR/coverals/coverage.info "/usr*" "*3rdparty*" -o $TRAVIS_BUILD_DIR/coverals/coverage.info
+  - lcov --remove coverage.info "/usr*" "*3rdparty*" -o coverage.info
+  - ls -alF .
 
 #  - gcov ./mydaemon/test/gtest01.cpp --object-file ./mydaemon/test/CMakeFiles/gtest01.dir/gtest01.cpp.gcno
 #  - gcov ./mylib/mymath.cpp --object-file ./mylib/CMakeFiles/MyMath.dir/mymath.cpp.gcno -l
@@ -46,10 +43,10 @@ after_success:
 #  - coveralls --gcov-options '\-lp' --verbose --dump coveralls.json
 
   # Sending data to Coveralls
-  - cd $TRAVIS_BUILD_DIR
+#  - cd $TRAVIS_BUILD_DIR
   - pwd
   - gem install coveralls-lcov
-  - coveralls-lcov coverals/coverage.info
+  - coveralls-lcov coverage.info
 
 after_script:
   - pwd
@@ -58,7 +55,7 @@ after_script:
   - ls -alF ./build/mylib
   - ls -alF ./build/mylib/test
   - find . -name "*.gc*"
-#  - cat coveralls.json
+  - cat coverage.info
 
 notifications:
   slack: j0ny:tlJolYCjWs5eI2DmeZFry8sa
