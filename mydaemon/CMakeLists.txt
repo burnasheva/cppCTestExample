@@ -7,5 +7,3 @@ include_directories(include)
 
 add_executable(${BIN_NAME} src/main.cpp)
 target_link_libraries(${BIN_NAME} MyMath)
-
-add_subdirectory(test)
