@@ -8,9 +8,8 @@ lcov --zerocounters --directory .
 ctest
 
 # echo -e '\n# lcov --capture --directory . --output-file coverage.info ************'
-lcov --capture --directory . --output-file coverage.info
-lcov -r coverage.info /usr/include/\* -o coverage.info
-lcov -r coverage.info 3rdparty/\* -o coverage.info
+lcov --capture --directory ./ --base-directory ./ --output-file coverage.info
+lcov -r coverage.info "/usr*" "*3rdparty*" -o coverage.info
 
 # echo -e '\n# genhtml coverage.info --output-directory coverage.out ************'
 genhtml coverage.info --output-directory coverage.out
