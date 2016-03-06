@@ -10,8 +10,8 @@ before_install:
 
 script:
  - mkdir build && cd build && cmake .. && make VERBOSE=1
- - ./mydaemon/test/btest01 --log_level=all
- - ./mydaemon/test/gtest01
+ - ./mylib/test/btest01 --log_level=all
+ - ./mylib/test/gtest01
 
 after_success:
  - sudo rm /usr/bin/gcov && sudo cp /usr/bin/gcov-4.8 /usr/bin/gcov
@@ -20,12 +20,14 @@ after_success:
  - gcov ./mylib/mymath.cpp --object-file ./mylib/CMakeFiles/MyMath.dir/mymath.cpp.gcno -l
  # - coveralls --exclude lib --exclude tests --gcov-options '\-lp'
  - coveralls --gcov-options '\-lp'
+ - coveralls
 
 after_script:
  - pwd
  - ls -alF .
  - ls -alF ./mydaemon
- - ls -alF ./mydaemon/test
+ - ls -alF ./mylib
+ - ls -alF ./mylib/test
  - find . -name "*.gcno*"
 
 notifications:
