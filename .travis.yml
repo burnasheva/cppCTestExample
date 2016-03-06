@@ -27,8 +27,9 @@ script:
 after_success:
   # Copying Coveralls data to a separate folder
   - mkdir -p $TRAVIS_BUILD_DIR/coverals
-  - find ../../../bin.v2/ -name "*.gcda" -exec cp "{}" $TRAVIS_BUILD_DIR/coverals/ \;
-  - find ../../../bin.v2/ -name "*.gcno" -exec cp "{}" $TRAVIS_BUILD_DIR/coverals/ \;
+  - find ./ -name "*.gcda" -exec cp "{}" $TRAVIS_BUILD_DIR/coverals/ \;
+  - find ./ -name "*.gcno" -exec cp "{}" $TRAVIS_BUILD_DIR/coverals/ \;
+  - ls -alF $TRAVIS_BUILD_DIR/coverals
 
   # use gcov-4.8
   - sudo rm /usr/bin/gcov && sudo cp /usr/bin/gcov-4.8 /usr/bin/gcov
@@ -47,16 +48,17 @@ after_success:
 
   # Sending data to Coveralls
   - cd $TRAVIS_BUILD_DIR
+  - pwd
   - gem install coveralls-lcov
   - coveralls-lcov coverals/coverage.info
 
 after_script:
   - pwd
   - ls -alF .
-  - ls -alF ./mydaemon
-  - ls -alF ./mylib
-  - ls -alF ./mylib/test
-  - find . -name "*.gcno*"
+  - ls -alF ./build/mydaemon
+  - ls -alF ./build/mylib
+  - ls -alF ./build/mylib/test
+  - find . -name "*.gc*"
 #  - cat coveralls.json
 
 notifications:
