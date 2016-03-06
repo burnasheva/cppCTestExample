@@ -6,8 +6,6 @@ os:       linux
 addons:
   apt:
     packages:
-#    - valgrind
-#    - python-yaml
     - lcov
 
 before_install:
@@ -32,7 +30,8 @@ after_success:
   - ls -alF $TRAVIS_BUILD_DIR/coverals
 
   # use gcov-4.8
-  - sudo rm /usr/bin/gcov && sudo cp /usr/bin/gcov-4.8 /usr/bin/gcov
+  - sudo update-alternatives --install /usr/bin//gcov /gcov /usr/bin//gcov-4.8 90
+#  - sudo rm /usr/bin/gcov && sudo cp /usr/bin/gcov-4.8 /usr/bin/gcov
   - gcov -v
 
   # Preparing Coveralls data by changind data format to a readable one
