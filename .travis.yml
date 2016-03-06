@@ -21,6 +21,8 @@ before_install:
   - gcov -v
   - lcov -v
   - genhtml -v
+  - cd $TRAVIS_BUILD_DIR
+  - pwd
 
 script:
   - mkdir build && cd build && cmake .. && make VERBOSE=1
@@ -29,12 +31,6 @@ script:
   - ./mylib/test/gtest01
 
 after_success:
-  # use gcov-4.8
-#  - sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-4.8 90
-#  - sudo rm /usr/bin/gcov && sudo cp /usr/bin/gcov-4.8 /usr/bin/gcov
-#  - gcov -v
-  - pwd
-
   # Preparing Coveralls data by changind data format to a readable one
   - lcov --capture --directory ./ --base-directory ./ --output-file coverage.info
   - ls -alF .
