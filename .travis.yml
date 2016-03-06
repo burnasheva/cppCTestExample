@@ -6,7 +6,8 @@ os:       linux
 addons:
   apt:
     packages:
-    - lcov-1.12
+    - lcov
+    - rpm
 
 before_install:
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
