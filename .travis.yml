@@ -6,7 +6,7 @@ os:       linux
 addons:
   apt:
     packages:
-    - lcov
+    - lcov-1.12
 
 before_install:
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
@@ -16,8 +16,11 @@ before_install:
 #  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
   - if [ "$CXX" = "g++" ]; then sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90; fi
   - if [ "$CXX" = "g++" ]; then sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-4.8 90; fi
+  - sudo apt-get install -qq lcov-1.12
+  - wget http://downloads.sourceforge.net/ltp/lcov-1.12-1.noarch.rpm $$ rpm -U --force lcov-1.12-1.noarch.rpm
   - g++ -v
   - gcov -v
+  - lcov -v
   - genhtml -v
 #  - pip install --user cpp-coveralls
 
