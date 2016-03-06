@@ -3,25 +3,24 @@ compiler: gcc
 os:       linux
 
 # Installing additional tools
-addons:
-  apt:
-    packages:
-    - lcov
-    - rpm
+#addons:
+#  apt:
+#    packages:
+#    - lcov
+#    - rpm
 
 before_install:
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
   - sudo apt-get update -qq
   - sudo apt-get install libboost-test-dev
   - if [ "$CXX" = "g++" ]; then sudo apt-get install -qq g++-4.8; fi
-#  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
   - if [ "$CXX" = "g++" ]; then sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90; fi
   - if [ "$CXX" = "g++" ]; then sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-4.8 90; fi
+  - git clone https://github.com/linux-test-project/lcov.git && cd lcov && sudo make install
   - g++ -v
   - gcov -v
-#  - lcov -v
-#  - genhtml -v
-#  - pip install --user cpp-coveralls
+  - lcov -v
+  - genhtml -v
 
 script:
   - mkdir build && cd build && cmake .. && make VERBOSE=1
@@ -69,12 +68,12 @@ after_script:
 
   - whereis lcov
   - lcov -v
-  - wget http://downloads.sourceforge.net/ltp/lcov-1.12-1.noarch.rpm && rpm -U --force lcov-1.12-1.noarch.rpm
-  - whereis lcov
-  - lcov -v
-  - git clone https://github.com/linux-test-project/lcov.git && cd lcov && sudo make install
-  - whereis lcov
-  - lcov -v
+#  - wget http://downloads.sourceforge.net/ltp/lcov-1.12-1.noarch.rpm && rpm -U --force lcov-1.12-1.noarch.rpm
+#  - whereis lcov
+#  - lcov -v
+#  - git clone https://github.com/linux-test-project/lcov.git && cd lcov && sudo make install
+#  - whereis lcov
+#  - lcov -v
 
 notifications:
   slack: j0ny:tlJolYCjWs5eI2DmeZFry8sa
