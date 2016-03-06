@@ -2,13 +2,6 @@ language: cpp
 compiler: gcc
 os:       linux
 
-# Installing additional tools
-#addons:
-#  apt:
-#    packages:
-#    - lcov
-#    - rpm
-
 before_install:
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
   - sudo apt-get update -qq
@@ -39,17 +32,11 @@ after_success:
   - lcov --remove coverage.info "/usr*" "*3rdparty*" -o coverage.info
   - ls -alF .
 
-  - genhtml coverage.info --output-directory coverage.out
-  - ls -alF coverage.out
-
-#  - gcov ./mydaemon/test/gtest01.cpp --object-file ./mydaemon/test/CMakeFiles/gtest01.dir/gtest01.cpp.gcno
-#  - gcov ./mylib/mymath.cpp --object-file ./mylib/CMakeFiles/MyMath.dir/mymath.cpp.gcno -l
-#  - coveralls --exclude lib --exclude tests --gcov-options '\-lp'
-#  - coveralls --gcov-options '\-lp' --verbose --dump coveralls.json
+  # generate html report
+#  - genhtml coverage.info --output-directory coverage.out
+#  - ls -alF coverage.out
 
   # Sending data to Coveralls
-#  - cd $TRAVIS_BUILD_DIR
-  - pwd
   - gem install coveralls-lcov
   - coveralls-lcov coverage.info
 
@@ -61,15 +48,6 @@ after_script:
   - ls -alF ./build/mylib/test
   - find . -name "*.gc*"
   - cat coverage.info
-
-  - whereis lcov
-  - lcov -v
-#  - wget http://downloads.sourceforge.net/ltp/lcov-1.12-1.noarch.rpm && rpm -U --force lcov-1.12-1.noarch.rpm
-#  - whereis lcov
-#  - lcov -v
-#  - git clone https://github.com/linux-test-project/lcov.git && cd lcov && sudo make install
-#  - whereis lcov
-#  - lcov -v
 
 notifications:
   slack: j0ny:tlJolYCjWs5eI2DmeZFry8sa
