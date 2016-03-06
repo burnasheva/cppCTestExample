@@ -72,7 +72,7 @@ after_script:
   - wget http://downloads.sourceforge.net/ltp/lcov-1.12-1.noarch.rpm && rpm -U --force lcov-1.12-1.noarch.rpm
   - whereis lcov
   - lcov -v
-  - git clone https://github.com/linux-test-project/lcov.git && cd lcov && make install
+  - git clone https://github.com/linux-test-project/lcov.git && cd lcov && sudo make install
   - whereis lcov
   - lcov -v
 
