@@ -55,6 +55,8 @@ after_script:
   - ls -alF ./build/mylib
   - ls -alF ./build/mylib/test
   - find . -name "*.gc*"
+  - whereis lcov
+  - whereis genhtml
   - cat coverage.info
 
 notifications:
