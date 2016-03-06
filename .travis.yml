@@ -19,8 +19,8 @@ after_success:
  # - gcov ./mydaemon/test/gtest01.cpp --object-file ./mydaemon/test/CMakeFiles/gtest01.dir/gtest01.cpp.gcno
  - gcov ./mylib/mymath.cpp --object-file ./mylib/CMakeFiles/MyMath.dir/mymath.cpp.gcno -l
  # - coveralls --exclude lib --exclude tests --gcov-options '\-lp'
- - coveralls --gcov-options '\-lp'
- - coveralls
+ - coveralls --gcov-options '\-lp' --verbose
+ - coveralls --verbose
 
 after_script:
  - pwd
