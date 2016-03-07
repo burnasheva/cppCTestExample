@@ -3,13 +3,20 @@ compiler: gcc
 os:       linux
 
 before_install:
+  # install boost-test
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
   - sudo apt-get update -qq
   - sudo apt-get install libboost-test-dev
+
+  # install gcc-4.8
   - if [ "$CXX" = "g++" ]; then sudo apt-get install -qq g++-4.8; fi
   - if [ "$CXX" = "g++" ]; then sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90; fi
   - if [ "$CXX" = "g++" ]; then sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-4.8 90; fi
+
+  # install lcov
   - git clone https://github.com/linux-test-project/lcov.git && cd lcov && sudo make install
+
+  # just to be sure
   - g++ -v
   - gcov -v
   - lcov -v
@@ -20,15 +27,14 @@ before_install:
 script:
   - mkdir build && cd build && cmake .. && make VERBOSE=1
   - lcov --zerocounters --directory ./
-  - ./mylib/test/btest01 --log_level=all
-  - ./mylib/test/gtest01
+  - ctest --verbose
 
 after_success:
   # Preparing Coveralls data by changind data format to a readable one
   - lcov --capture --directory ./ --base-directory ./ --output-file coverage.info
   - ls -alF .
 
-  # ... erasing /usr* and 3rdparty folder data
+  # ... erasing /usr* and 3rdparty folders data
   - lcov --remove coverage.info "/usr*" "*3rdparty*" -o coverage.info
   - ls -alF .
 
@@ -41,6 +47,7 @@ after_success:
   - coveralls-lcov coverage.info
 
 after_script:
+  # just to check
   - pwd
   - ls -alF .
   - ls -alF ./build/mydaemon
